@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE resources [
+    <!ENTITY appname "Llegué a mi Destino!">
+    <!ENTITY author "Wígny Almeida">
+    ]>
+
+<resources>
+    <string name="app_name">&appname;</string>
+    <string name="menu_point">Mapa</string>
+    <string name="main_clock">Funcionamiento</string>
+    <string name="notification_text">El app está calculando su ruta…</string>
+    <string name="notification_stop">Detener</string>
+    <string name="notification_launch">Abrir App</string>
+    <string name="dialog_map_title">Destino no encontrado!</string>
+    <string name="dialog_map_content">Introduzca su destino agregando un marcador en el mapa…</string>
+    <string name="dialog_map_ok">Agregar un destino</string>
+    <string name="main_choice_time">Elija una hora</string>
+    <string name="main_distance">Distancia mínima:</string>
+    <string name="main_time_set">Definir</string>
+    <string name="dialog_time_title">Horario de funcionamiento no definido!</string>
+    <string name="dialog_time_content">Defina una hora de funcionamiento de la aplicación…</string>
+    <string name="dialog_time_ok">Establezca un tiempo</string>
+    <string name="notification_wakeup_title">Llegué!</string>
+    <string name="notification_wakeup_content">Usted acabó de llegar a su destino!</string>
+    <string name="main_clock_schedule">Horario:</string>
+    <string name="main_clock_repeat">Repetir diariamente:</string>
+
+    <string-array name="daysOfWeek">
+        <item>Domingo</item>
+        <item>Lunes</item>
+        <item>Martes</item>
+        <item>Miércoles</item>
+        <item>Jueves</item>
+        <item>Viernes</item>
+        <item>Sábado</item>
+    </string-array>
+
+    <string name="dialog_cancel">Cancelar</string>
+    <string name="dialog_repeat_days_title">Elija los días de la semana…</string>
+    <string name="dialog_reset">Restablecer</string>
+    <string name="main_info">Para el funcionamiento de la aplicación, asegúrese de que la ubicación de su smartphone esté activada en el momento de su ejecución.</string>
+    <string name="info_title">Creado por &author;</string>
+    <string name="main_open_map">Establecer destino:</string>
+    <string name="toast_on">La aplicación se iniciará automáticamente a la hora especificada</string>
+    <string name="notification_title">En ejecución…</string>
+    <string name="location_permission_request_content">¡La aplicación necesita acceso a la ubicación del dispositivo para funcionar!</string>
+    <string name="location_permission_request_title">Acceso a la ubicación requerida</string>
+    <string name="menu_about">Acerca de</string>
+    <string name="about_description">\'&appname;\' se hizo con cariño en Rondônia, Brasil.</string>
+    <string name="menu_main">Primero</string>
+    <string name="settings_theme_title">Tema</string>
+    <string name="settings_theme_automatic">Elección automática</string>
+    <string name="settings_theme_automatic_description">Elegir tema automáticamente de acuerdo con el horario del día</string>
+
+    <string-array name="themeChoice">
+        <item>Claro</item>
+        <item>Oscuro</item>
+    </string-array>
+
+    <string-array name="mapType">
+        <item>Ninguno</item>
+        <item>Normal</item>
+        <item>Satélite</item>
+        <item>Terreno</item>
+        <item>Híbrido</item>
+    </string-array>
+    <string name="settings_map_traffic_description">Mostrar densidad de tráfico en el mapa</string>
+    <string name="settings_map_traffic">Mostrar tráfico</string>
+    <string name="settings_map_controls">Mostrar controles</string>
+    <string name="settings_map_controls_description">Mostrar controles de interacción en el mapa</string>
+    <string name="menu_settings">Configuraciones</string>
+    <string name="settings_map_type_description">Seleccione un tipo de mapa</string>
+    <string name="settings_map_type">Tipo de mapa</string>
+    <string name="dialog_location_disabled_title">Ubicación deshabilitada</string>
+    <string name="dialog_location_disabled_content">La ubicación del teléfono inteligente está desactivada, impidiendo que la aplicación funcione. ¿Desea activar la ubicación?</string>
+    <string name="toast_theme_reboot">El tema se aplicará en el próximo reinicio.</string>
+    <string name="settings_theme_manual_description">Elija el tema manualmente</string>
+    <string name="settings_map_title">Mapa</string>
+    <string name="dialog_choice_ringtone">Seleccione un tono como notificación:</string>
+    <string name="settings_notification_vibration">Vibrar</string>
+    <string name="settings_notification_vibration_description">Vibrar al llegar al destino</string>
+    <string name="settings_notification_choice_sound">Elegir sonido</string>
+    <string name="settings_notification_sound">Escuchar sonido</string>
+    <string name="settings_notification_sound_description">Reproducción de sonido al llegar al destino</string>
+    <string name="settings_notification_title">Notificación</string>
+    <string name="settings_reset_title">Redefinir</string>
+    <string name="settings_theme_manual">Elección manual</string>
+    <string name="settings_reset_reset_description">Borrar todas las preferencias guardadas</string>
+    <string name="settings_reset_reset">Restablecer datos</string>
+    <string name="main_destination">Destino</string>
+    <string name="tutorial_hello">¡Hola</string>
+    <string name="tutorial_hello_description">Usted verá a continuación un pequeño tutorial sobre el funcionamiento de la aplicación.</string>
+    <string name="tutorial_schedule">Definir una hora de funcionamiento</string>
+    <string name="tutorial_schedule_description">Haga clic en el botón para elegir la hora deseada para el inicio automático de la aplicación.</string>
+    <string name="info_unavailable">Indisponible</string>
+    <string name="copied_to_clipboard">Copiado al portapapeles</string>
+    <string name="notification_text_failure_location">Error al obtener la ubicación.</string>
+    <string name="notification_text_failure_permission">Permiso de ubicación perdida.</string>
+    <string name="notification_title_failure">Error de ejecución</string>
+    <string name="notification_text_default">Buscando ubicación actual.</string>
+</resources>
