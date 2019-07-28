@@ -62,10 +62,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // define cor do tema ao iniciar
         setTheme(getThemeId(this));
 
         super.onCreate(savedInstanceState);
 
+        // verifica se o gps esta ligado
         verifyGPSEnabled();
 
         setContentView(R.layout.activity_main);
@@ -74,7 +76,12 @@ public class MainActivity extends AppCompatActivity
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this,
+                drawer,
+                toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close
+        );
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -84,16 +91,20 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void verifyGPSEnabled() {
+        // se o gps estivar desabilitado, abre-se um AlertDialog pedindo para liga-lo
         boolean gpsDisabled = getIntent().getBooleanExtra(GPS_DISABLED, false);
         if(gpsDisabled) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(getString(R.string.dialog_location_disabled_title));
             builder.setMessage(getString(R.string.dialog_location_disabled_content));
-            builder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface arg0, int arg1) {
-                    startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
+            builder.setPositiveButton(
+                getString(android.R.string.ok),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
+                    }
                 }
-            });
+            );
             builder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -128,13 +139,17 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+        // inicia o desativa os servicos
         AlarmReceiver alarmReceiver = new AlarmReceiver();
         if (isChecked) {
+            // checa se as condicoes para o inicio estao corretas
             if(checkConditions()) {
+                // define o alarme
                 alarmReceiver.setUpAlarms(this, true);
                 toast(this, getString(R.string.toast_on));
             }
         } else {
+            // deliga os alarmes e para o servico
             alarmReceiver.setUpAlarms(this,false);
             stopService(new Intent(this, LocationService.class));
         }
@@ -168,6 +183,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
+        // verifica permissoes
         Log.i(TAG, "onRequestPermissionResult");
         if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
             if (!(permissions.length == 1 &&
@@ -188,9 +204,12 @@ public class MainActivity extends AppCompatActivity
     private boolean checkConditions() {
         String result = startConditions(this);
         if (result != null) {
+
+            // checa as permissoes
             if (result.equals(CHECK_PERMISSIONS))
                 openLocationRequestDialog();
 
+            // checa se foi definido um horario de funcionamento
             else if (result.equals(GET_TIME)) {
                 if (firstSetTime) {
                     openTimeDialog();
@@ -199,6 +218,7 @@ public class MainActivity extends AppCompatActivity
                 else toast(this, getString(R.string.dialog_time_ok));
             }
 
+            // checa se foi inserido um marcador
             else if (result.equals(GET_MARKER)) {
                 if (firstOpenMap) {
                     openMapDialog();

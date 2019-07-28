@@ -63,6 +63,7 @@ public class MainFragment extends Fragment implements SharedPreferences.OnShared
 
         getButtonText();
 
+        // pega o horario de funcionamento
         btnChoiceTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,6 +83,7 @@ public class MainFragment extends Fragment implements SharedPreferences.OnShared
             }
         });
 
+        // pega uma distancia minima do gatilho
         spinner.setSelection(getMinimumDistance(getContext()));
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -95,6 +97,7 @@ public class MainFragment extends Fragment implements SharedPreferences.OnShared
             }
         });
 
+        // pega as repeticoes diarias
         btnRepeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

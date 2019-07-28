@@ -40,7 +40,8 @@ import static io.github.wigny.chegueiaomeudestino.classes.Utils.getMarkerPositio
 import static io.github.wigny.chegueiaomeudestino.classes.Utils.setMarkerPosition;
 
 public class MapsFragment extends Fragment implements GoogleMap.OnMapClickListener,
-        OnMapReadyCallback, GoogleMap.OnCameraMoveStartedListener {
+        OnMapReadyCallback {
+//        }, GoogleMap.OnCameraMoveStartedListener {
 
     private GoogleMap mMap;
     private Marker marker;
@@ -72,6 +73,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMapClickListen
 
         floatBtn = view.findViewById(R.id.floatBtn);
 
+        // switch do floating button
         floatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,12 +85,14 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMapClickListen
         return view;
     }
 
+    // recupera ultimo marcador salvo ao iniciar
     @Override
     public void onStart() {
         super.onStart();
         latLng = getMarkerPosition(getContext());
     }
 
+    // adiciona marcador no clique do mapa
     @Override
     public void onMapClick(LatLng latLng) {
         if (marker != null) {
@@ -97,12 +101,15 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMapClickListen
         addMarker(latLng);
     }
 
-    @Override
-    public void onCameraMoveStarted(int i) {
-        if (i == GoogleMap.OnCameraMoveStartedListener.REASON_GESTURE)
-            setFloatBtn(FLOAT_BTN_SEARCH);
-    }
+    // troca o floating button ao mover o mapa
+//    @Override
+//    public void onCameraMoveStarted(int i) {
+//        if (i == GoogleMap.OnCameraMoveStartedListener.REASON_GESTURE)
+//            setFloatBtn(FLOAT_BTN_SEARCH);
+//    }
 
+
+    // define as configuracoes do mapa
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -112,7 +119,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMapClickListen
         mMap.setTrafficEnabled(getMapTraffic(getContext()));
         mMap.setMapType(getMapType(getContext()));
         mMap.setOnMapClickListener(this);
-        mMap.setOnCameraMoveStartedListener(this);
+//        mMap.setOnCameraMoveStartedListener(this);
 
         if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -124,6 +131,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMapClickListen
         setFloatBtn(FLOAT_BTN_SEARCH);
     }
 
+    // pega marcador ao pesquisar place
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
@@ -139,6 +147,7 @@ public class MapsFragment extends Fragment implements GoogleMap.OnMapClickListen
         }
     }
 
+    // adiciona marcador e anima a transicao
     private void addMarker(LatLng latLng) {
         MarkerOptions options = new MarkerOptions();
         options.position(latLng);

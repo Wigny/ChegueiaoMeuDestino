@@ -80,10 +80,14 @@ public class LocationService extends Service {
             }
         };
 
+        // inicia a requisacao da localizacao
         createLocationRequest();
 
+        // pega a ultima localizacao conhecida
         getLastLocation();
 
+
+        // cria a notificacao
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -97,13 +101,18 @@ public class LocationService extends Service {
         builder = new NotificationCompat.Builder(this, CHANNEL_ID);
         startForeground(NOTIFICATION_ID, getNotification(builder));
 
+        // cria a vibracao
         vibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+
+        // cria o toque
         player = MediaPlayer.create(getApplicationContext(), getRingtoneUri(getApplicationContext()));
         player.setLooping(true);
 
         super.onCreate();
     }
 
+
+    // impede que o servico seja interrompido pelo android e permite que ele seja executado em segundo plano
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         boolean startedFromNotification = intent.getBooleanExtra(EXTRA_STARTED_FROM_NOTIFICATION,false);
@@ -116,6 +125,7 @@ public class LocationService extends Service {
         return START_STICKY;
     }
 
+    // destroi completamente o servico
     @Override
     public void onDestroy() {
         stopLocationUpdates();
@@ -163,6 +173,7 @@ public class LocationService extends Service {
 
                                 try {
                                     boolean gps_enabled = Objects.requireNonNull(lm).isProviderEnabled(LocationManager.GPS_PROVIDER);
+                                    // se obter erros, e o gps não estiver habilitado, abre a aplicacao com um alert dialog
                                     if(!gps_enabled) openMainActivity();
                                 } catch(Exception ignored) {}
                             }
@@ -173,17 +184,23 @@ public class LocationService extends Service {
         }
     }
 
+    // executado toda vez que recebe uma nova localizacao
     private void onNewLocation(Location location) {
         Log.i(TAG, "New location: " + location);
 
         mLocation = location;
 
+        // pega a coordenada da localizacao atual
         LatLng myLocation = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
+        // pega a coordenada de destino, inserida no marcador do mapa
         LatLng destination =  Objects.requireNonNull(getMarkerPosition(this));
 
+        // pega a distancia entre as duas coordenadas
         float distance = distanceBetween(myLocation, destination);
 
+        // verifica se a distancia é inferior à distancia minima para o gatilho
         if(distance <= getMinimumDistance()) {
+            // se a distancia for inferior, inicia a notificacao e para os servicos
             mNotificationManager.notify(NOTIFICATION_ID, newNotification(builder));
             stopLocationUpdates();
             if(!getRepeatDaysIsTrue(this)) setRequestingLocationUpdates(this, false);
@@ -191,6 +208,7 @@ public class LocationService extends Service {
 //        setDistanceLocation(getApplicationContext(), distance);
     }
 
+    // configura a notificacao
     private Notification getNotification(NotificationCompat.Builder builder) {
         Intent intent = new Intent(this, LocationService.class);
 
@@ -224,6 +242,7 @@ public class LocationService extends Service {
         return builder.build();
     }
 
+    // configura a vibracao e o som
     private Notification newNotification(NotificationCompat.Builder builder) {
         long[] pattern = {0, 1000, 100, 1000, 100, 1000, 100, 1000, 100};
 
@@ -239,6 +258,7 @@ public class LocationService extends Service {
         return builder.build();
     }
 
+    // retorna a distancia entre dois pontos
     private float distanceBetween(LatLng latLng1, LatLng latLng2) {
         Location loc1 = new Location(LocationManager.GPS_PROVIDER);
         Location loc2 = new Location(LocationManager.GPS_PROVIDER);
@@ -252,6 +272,7 @@ public class LocationService extends Service {
         return loc1.distanceTo(loc2);
     }
 
+    // pega a distancia minima inserida pelo usuario
     private int getMinimumDistance() {
         int minimumDistance = 0;
         switch (Utils.getMinimumDistance(this)) {
@@ -277,6 +298,7 @@ public class LocationService extends Service {
         return minimumDistance;
     }
 
+    // abre o app
     private void openMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(GPS_DISABLED, true);

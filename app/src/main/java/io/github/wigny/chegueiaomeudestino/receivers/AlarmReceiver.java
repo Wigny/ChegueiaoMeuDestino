@@ -20,6 +20,7 @@ import static io.github.wigny.chegueiaomeudestino.classes.Utils.setRequestingLoc
 public class AlarmReceiver extends BroadcastReceiver {
     private static final String TAG = AlarmReceiver.class.getSimpleName();
 
+    // inicia o servico no start do broadcastreceiver
     @Override
     public void onReceive(Context context, Intent intent) {
         context.startForegroundService(new Intent(context, LocationService.class));
@@ -31,11 +32,14 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void setUpAlarms(Context context, boolean start) {
         alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
+        // configura o alarme para dias repetidos da semana
         if(getRepeatDaysIsTrue(context)) {
             for(int i = 0; i <= 6 ; i++) {
                 if(getRepeatDays(context, i)) scheduleAlarm(context,i+1, start);
             }
-        } else {
+        }
+        // configura um unico alarme
+        else {
             scheduleAlarm(context,0, start);
         }
     }
@@ -50,6 +54,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
 
+
         if(start) {
             if(dayOfWeek == 0) startSimpleAlarm(calendar);
             else startRepetitiveAlarm(calendar, dayOfWeek);
@@ -57,12 +62,14 @@ public class AlarmReceiver extends BroadcastReceiver {
         } else stopAlarm(context);
     }
 
+    // para o alarme e o servico
     private void stopAlarm(Context context) {
         alarmManager.cancel(pendingIntent);
         setRequestingLocationUpdates(context, false);
         Log.d(TAG, "stopAlarm");
     }
 
+    // define o alarme
     private void startSimpleAlarm(Calendar calendar) {
         if(calendar.before(Calendar.getInstance())){
             calendar.add(Calendar.DAY_OF_MONTH,1);
